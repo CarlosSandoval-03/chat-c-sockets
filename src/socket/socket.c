@@ -9,9 +9,11 @@
 #include "./socket.h"
 #include "../server/server.h"
 
-int create_socket() {
+int create_socket()
+{
   int socket_fd = socket(AF_INET, SOCK_STREAM, 0);
-  if (socket_fd < 0) {
+  if (socket_fd < 0)
+  {
     perror("SOCKET: FAILED TO CREATE THE SOCKET");
     exit(EXIT_FAILURE);
   }
@@ -19,15 +21,17 @@ int create_socket() {
   return socket_fd;
 }
 
-int socket_bind_server(int server_fd) {
+int socket_bind_server(int server_fd)
+{
   struct sockaddr_in server_conf;
   server_conf.sin_family = AF_INET;
   server_conf.sin_port = htons(PORT);
   server_conf.sin_addr.s_addr = INADDR_ANY;
   bzero(server_conf.sin_zero, sizeof(server_conf.sin_zero));
 
-  int bind_status = bind(server_fd, (struct sockaddr *) &server_conf, sizeof(struct sockaddr));
-  if (bind_status < 0) {
+  int bind_status = bind(server_fd, (struct sockaddr *)&server_conf, sizeof(struct sockaddr));
+  if (bind_status < 0)
+  {
     perror("BIND: ERROR PERFORMING THE BIND");
     exit(EXIT_FAILURE);
   }
@@ -35,15 +39,17 @@ int socket_bind_server(int server_fd) {
   return bind_status;
 }
 
-int socket_connect_client(int client_fd) {
+int socket_connect_client(int client_fd)
+{
   struct sockaddr_in client_conf;
   client_conf.sin_family = AF_INET;
   client_conf.sin_port = htons(PORT);
   inet_aton(HOST, &client_conf.sin_addr);
   bzero(client_conf.sin_zero, sizeof(client_conf.sin_zero));
 
-  int connect_status = connect(client_fd, (struct sockaddr *) &client_conf, (socklen_t) sizeof(struct sockaddr));
-  if (connect_status < 0) {
+  int connect_status = connect(client_fd, (struct sockaddr *)&client_conf, (socklen_t)sizeof(struct sockaddr));
+  if (connect_status < 0)
+  {
     perror("CONNECTION: ERROR WHILE CONNECTING THE CLIENT");
     exit(EXIT_FAILURE);
   }
