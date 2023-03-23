@@ -39,12 +39,12 @@ int socket_bind_server(int server_fd)
   return bind_status;
 }
 
-int socket_connect_client(int client_fd)
+int socket_connect_client(int client_fd, char *host, unsigned int port)
 {
   struct sockaddr_in client_conf;
   client_conf.sin_family = AF_INET;
-  client_conf.sin_port = htons(PORT);
-  inet_aton(HOST, &client_conf.sin_addr);
+  client_conf.sin_port = htons(port);
+  inet_aton(host, &client_conf.sin_addr);
   bzero(client_conf.sin_zero, sizeof(client_conf.sin_zero));
 
   int connect_status = connect(client_fd, (struct sockaddr *)&client_conf, (socklen_t)sizeof(struct sockaddr));
